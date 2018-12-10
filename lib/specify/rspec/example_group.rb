@@ -5,6 +5,22 @@ module RSpec
       def Given(message, options = {}, &block)
         run_example_step(:given, message, options, &block)
       end
+
+      def When(message, options = {}, &block)
+        run_example_step(:when, message, options, &block)
+      end
+
+      def Then(message, options = {}, &block)
+        run_example_step(:then, message, options, &block)
+      end
+
+      def And(message, options = {}, &block)
+        run_example_step(:and, message, options, &block)
+      end
+
+      def But(message, options = {}, &block)
+        run_example_step(:but, message, options, &block)
+      end
       # rubocop:enable Naming/MethodName
 
       private
