@@ -6,7 +6,7 @@ module RSpec
     class Formatter < ::RSpec::Core::Formatters::DocumentationFormatter
       ::RSpec::Core::Formatters.register(
         self,
-        :example_started, :example_passed
+        :example_started, :example_passed, :example_step_passed
       )
 
       def example_started(notification)
@@ -21,6 +21,15 @@ module RSpec
 
       def example_passed(notification)
         super unless notification.example.metadata[:with_steps]
+      end
+
+      def example_step_passed(notification)
+        indentation = current_indentation
+        step_type = notification.type.to_s.capitalize
+        step_message = notification.message
+
+        full_message = "#{indentation}  #{step_type} #{step_message}"
+        output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :success)
       end
     end
   end
