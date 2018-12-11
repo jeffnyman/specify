@@ -50,12 +50,12 @@ module RSpec
 
         full_message = "#{indentation}  #{step_type} #{step_message}"
 
-        if notification.options[:pending] &&
-           notification.options[:pending] != true
-          full_message << " (PENDING: #{notification.options[:pending]})"
-        else
-          full_message << " (PENDING)"
-        end
+        full_message << if notification.options[:pending] &&
+                           notification.options[:pending] != true
+                          " (PENDING: #{notification.options[:pending]})"
+                        else
+                          " (PENDING)"
+                        end
 
         output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :pending)
       end

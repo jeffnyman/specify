@@ -67,3 +67,12 @@ Metrics/ParameterLists:
 # Remove execute permissions check.
 Lint/ScriptPermission:
   Enabled: false
+
+# Specify Additions
+
+# This checks assignments, branches and coverage. During development,
+# adding to the output of RSpec in a way that reads cleanly as code
+# means being a little only slightly more forgiving for this metric.
+# The default value is 15.
+Metrics/AbcSize:
+  Max: 17
