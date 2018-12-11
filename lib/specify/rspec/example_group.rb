@@ -25,24 +25,28 @@ module RSpec
 
       private
 
-      def run_example_step(type, msg, opts = {}, &_block)
+      def run_example_step(type, msg, opts = {}, &block)
         ::RSpec.world.reporter.example_step_started(self, type, msg, opts)
 
         if block_given? && !opts[:pending]
-          begin
-            yield
-          # rubocop:disable Lint/RescueException
-          rescue Exception => e
-            ::RSpec.world.reporter.example_step_failed(self, type, msg, opts)
-            raise e
-          end
-          # rubocop:enable Lint/RescueException
-          ::RSpec.world.reporter.example_step_passed(self, type, msg, opts)
+          execute_step(type, msg, opts, &block)
         else
           ::RSpec.world.reporter.example_step_pending(
             self, type, msg, opts
           )
         end
+      end
+
+      def execute_step(type, msg, opts, &_block)
+        begin
+          yield
+        # rubocop:disable Lint/RescueException
+        rescue Exception => e
+          ::RSpec.world.reporter.example_step_failed(self, type, msg, opts)
+          raise e
+        end
+        # rubocop:enable Lint/RescueException
+        ::RSpec.world.reporter.example_step_passed(self, type, msg, opts)
       end
     end
   end
