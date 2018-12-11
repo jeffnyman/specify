@@ -23,6 +23,34 @@ module RSpec
       end
       # rubocop:enable Naming/MethodName
 
+      def rule(message, options = {}, &block)
+        run_example_step(:rule, message, options, &block)
+      end
+
+      def fact(message, options = {}, &block)
+        run_example_step(:fact, message, options, &block)
+      end
+
+      def test(message, options = {}, &block)
+        run_example_step(:test, message, options, &block)
+      end
+
+      def step(message, options = {}, &block)
+        run_example_step(:step, message, options, &block)
+      end
+
+      def it(message, options = {}, &block)
+        run_example_step(:it, message, options, &block)
+      end
+
+      def specify(message, options = {}, &block)
+        run_example_step(:specify, message, options, &block)
+      end
+
+      def example(message, options = {}, &block)
+        run_example_step(:example, message, options, &block)
+      end
+
       private
 
       def run_example_step(type, msg, opts = {}, &block)

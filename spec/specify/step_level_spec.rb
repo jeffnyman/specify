@@ -21,5 +21,33 @@ RSpec.describe "top-level describe block" do
     But "step (But) - passing" do
       expect(@value).to eq "testing"
     end
+
+    rule "step (rule)" do
+      expect(@value).to eq "testing"
+    end
+
+    fact "step (fact)" do
+      expect(@value).to eq "testing"
+    end
+
+    step "step (step)" do
+      expect(@value).to eq "testing"
+    end
+
+    test "step (test)" do
+      expect(@value).to eq "testing"
+    end
+
+    it "step (it)" do
+      expect(@value).to eq "testing"
+    end
+
+    specify "step (specify)" do
+      expect(@value).to eq "testing"
+    end
+
+    example "step (example)" do
+      expect(@value).to eq "testing"
+    end
   end
 end
