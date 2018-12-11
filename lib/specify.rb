@@ -1,5 +1,6 @@
 require "specify/version"
 
+require "specify/spec"
 require "specify/rspec/reporter"
 require "specify/rspec/formatter"
 require "specify/rspec/notification"
