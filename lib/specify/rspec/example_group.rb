@@ -28,6 +28,8 @@ module RSpec
       def run_example_step(type, msg, opts = {}, &block)
         ::RSpec.world.reporter.example_step_started(self, type, msg, opts)
 
+        opts = { pending: true } if opts == :pending
+
         if block_given? && !opts[:pending]
           execute_step(type, msg, opts, &block)
         else
