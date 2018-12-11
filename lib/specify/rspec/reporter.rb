@@ -15,6 +15,11 @@ module RSpec
         notify :example_step_failed,
           Notification.new(example, type, message, options)
       end
+
+      def example_step_pending(example, type, message, options)
+        notify :example_step_pending,
+          Notification.new(example, type, message, options)
+      end
     end
   end
 end
