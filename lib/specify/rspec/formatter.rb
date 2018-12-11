@@ -12,7 +12,7 @@ module RSpec
       )
 
       def example_started(notification)
-        return unless notification.example.metadata[:with_steps]
+        return unless notification.example.metadata[:has_steps]
 
         indentation = current_indentation
         description = notification.example.description
@@ -24,7 +24,7 @@ module RSpec
       end
 
       def example_passed(notification)
-        super unless notification.example.metadata[:with_steps]
+        super unless notification.example.metadata[:has_steps]
       end
 
       def example_step_passed(notification)
