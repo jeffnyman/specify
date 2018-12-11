@@ -7,6 +7,8 @@
 
 Specify is a tool for leveraging RSpec to create an expressive DSL for test and data conditions. Specify will also provide test result reporting that recognizes the DSL.
 
+Specify provides an internal DSL, similar to the [RSpec Story Runner](https://github.com/dchelimsky/rspec-stories). This was the predecessor of the [Cucumber](http://cukes.info/) external DSL provided by [Gherkin](http://cukes.info/gherkin.html).
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -35,7 +37,19 @@ $ gem install specify
 
 ## Usage
 
-Instructions coming soon.
+To use Specify you simply have to require it within your `spec_helper.rb` file:
+
+```ruby
+require 'specify'
+```
+
+Because Specify uses a custom formatter, you should have an `.rspec` file with the following line in it:
+
+```ruby
+--format RSpec::Specify::Formatter
+```
+
+Then you simply run your `rspec` command as normal against your test suite.
 
 ## Development
 

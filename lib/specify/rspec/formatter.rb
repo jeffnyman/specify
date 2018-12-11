@@ -18,7 +18,9 @@ module RSpec
         description = notification.example.description
 
         full_message = "#{indentation}#{description}"
-        output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :default)
+        output.puts(
+          ::RSpec::Core::Formatters::ConsoleCodes.wrap(full_message, :default)
+        )
       end
 
       def example_passed(notification)
@@ -31,7 +33,9 @@ module RSpec
         step_message = notification.message
 
         full_message = "#{indentation}  #{step_type} #{step_message}"
-        output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :success)
+        output.puts(
+          ::RSpec::Core::Formatters::ConsoleCodes.wrap(full_message, :success)
+        )
       end
 
       def example_step_failed(notification)
@@ -40,7 +44,9 @@ module RSpec
         step_message = notification.message
 
         full_message = "#{indentation}  #{step_type} #{step_message} (FAILED)"
-        output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :failure)
+        output.puts(
+          ::RSpec::Core::Formatters::ConsoleCodes.wrap(full_message, :failure)
+        )
       end
 
       def example_step_pending(notification)
@@ -57,7 +63,9 @@ module RSpec
                           " (PENDING)"
                         end
 
-        output.puts Core::Formatters::ConsoleCodes.wrap(full_message, :pending)
+        output.puts(
+          ::RSpec::Core::Formatters::ConsoleCodes.wrap(full_message, :pending)
+        )
       end
     end
   end
