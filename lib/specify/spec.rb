@@ -7,6 +7,11 @@ module Specify
         alias :Component  :context
         alias :Workflow   :context
         alias :Service    :context
+
+        alias :Background :before
+        alias :Setup      :before
+        alias :Teardown   :after
+        alias :Cleanup    :after
       end
     end
   end
