@@ -1,3 +1,5 @@
+include Specify
+
 shared_steps "pushing to collection" do
   Given "an empty collection" do
     collection.clear

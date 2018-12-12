@@ -8,11 +8,10 @@ require "specify/rspec/notification"
 require "specify/rspec/example_group"
 
 require "specify/rspec/shared_steps"
-# rubocop:disable Style/MixinUsage
-include RSpec::Specify::SharedSteps
-# rubocop:enable Style/MixinUsage
 
 module Specify
+  include RSpec::Specify::SharedSteps
+
   ::RSpec::Core::ExampleGroup.define_example_method :Scenario, has_steps: true
   ::RSpec::Core::ExampleGroup.define_example_method :Condition, has_steps: true
   ::RSpec::Core::ExampleGroup.define_example_method :Behavior, has_steps: true
