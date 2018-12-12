@@ -1,6 +1,16 @@
 module RSpec
   module Specify
     module ExampleGroup
+      def include_steps(*args)
+        name = args.shift
+
+        shared_block = ::RSpec.world.shared_example_steps[name]
+        shared_block || raise(ArgumentError,
+          "Unable to find shared steps '#{name.inspect}'")
+
+        instance_exec(*args, &shared_block)
+      end
+
       # rubocop:disable Naming/MethodName
       def Given(message, options = {}, &block)
         run_example_step(:given, message, options, &block)

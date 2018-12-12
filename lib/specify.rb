@@ -1,10 +1,16 @@
 require "specify/version"
 
 require "specify/spec"
+require "specify/rspec/world"
 require "specify/rspec/reporter"
 require "specify/rspec/formatter"
 require "specify/rspec/notification"
 require "specify/rspec/example_group"
+
+require "specify/rspec/shared_steps"
+# rubocop:disable Style/MixinUsage
+include RSpec::Specify::SharedSteps
+# rubocop:enable Style/MixinUsage
 
 module Specify
   ::RSpec::Core::ExampleGroup.define_example_method :Scenario, has_steps: true
@@ -27,4 +33,5 @@ module Specify
 
   ::RSpec::Core::ExampleGroup.send :include, RSpec::Specify::ExampleGroup
   ::RSpec::Core::Reporter.send :include, RSpec::Specify::Reporter
+  ::RSpec::Core::World.send :include, RSpec::Specify::World
 end
