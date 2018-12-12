@@ -1,7 +1,13 @@
 Feature "top-level block (Feature)" do
 end
 
+feature "top-level block (feature)" do
+end
+
 Story "top-level block (Story)" do
+end
+
+story "top-level block (story)" do
 end
 
 Story "top-level story" do
@@ -16,6 +22,21 @@ Story "top-level story" do
 
     Component "component level" do
       Workflow "workflow level" do
+      end
+    end
+  end
+
+  ability "ability level" do
+    service "service level" do
+    end
+
+    component "component level" do
+      workflow "workflow level" do
+      end
+    end
+
+    component "component level" do
+      workflow "workflow level" do
       end
     end
   end
