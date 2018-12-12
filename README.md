@@ -49,7 +49,36 @@ Because Specify uses a custom formatter, you should have an `.rspec` file with t
 --format RSpec::Specify::Formatter
 ```
 
-Then you simply run your `rspec` command as normal against your test suite.
+Then you simply run your `rspec` command as normal against your test suite. Where the Specify formatter comes into play is in how you can construct your test specifications. You can use RSpec constructs within Specify constructs. Here is an example:
+
+```ruby
+Feature 'Bank Accounts' do
+  let(:valid_account_number) { '1234567890' }
+  subject { Account.new(valid_account_number) }
+
+  Scenario 'starting a new account' do
+    test 'will have a starting balance of 0' do
+      expect(subject.balance).to eq(0)
+    end
+
+    it 'will not allow an invalid account name' do
+      expect { Account.new('thx1138') }.to raise_error(InvalidAccountNumberError)
+    end
+  end
+end
+```
+
+You can see that within the Specify-provided `Feature` construct I have the standard `let` and `subject` elements. Within the Specify-provided `Scenario` you can see I use a Specify-provide method (`test`) and an RSpec-provided method (`it`).
+
+Modern development practices put an emphasis on communication. Much of this communication is done via the mechanisms of tests. These tests ideally act as readable specifications that communicate the intent of a test. Equally ideally, however, these tests do not hide the code that executes them behind too many layers of abstractions.
+
+Tools in the xSpec family, of which RSpec is a part, do a good job of keeping code as a first-class citizen. This is contrasted with tools in the xBehave family, of which Cucumber is a part, where you have various abstractions like feature files sitting in front of code. Beyond that you also often have an intermediary layer, like the step definition files of Cucumber, that add one more layer of maintenance.
+
+Beyond even that, such xBehave tools often do limit you to the expressions available via a structuring syntax, such as with the Gherkin API, that is outside of the code.
+
+Specify lets you write as much logic beside your specifications as you want by leveraging the RSpec ecosystem with the addition of a Gherkin-like syntax as well as additions to that syntax. Perhaps worth noting is that Specify has no dependence on Gherkin.
+
+The [unit tests](https://github.com/jeffnyman/specify/tree/master/spec) will give you some idea of how Specify allows the structuring of test specifications.
 
 ## Development
 
