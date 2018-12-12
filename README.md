@@ -112,7 +112,16 @@ end
 
 Gherkin structures allow you to use the word "Ability" as an alias for "Feature". However Specify takes the viewpoint that a feature could be speaking to a high-level viewpoint, within which there are multiple abilities. Thus you can use both descriptors simultaneously, one nested within the other, which would not be possible with Gherkin. You can also see here that multiple Scenario blocks can be included within a Feature or Ability just as they would in Gherkin.
 
-That Scenario implementation provided by Specify, however, is not just acting as an alias for `context`. Rather, Specify hooks into RSpec to change the execution. This is done by extending RSpec to support step groups.
+You might know that RSpec allows you to define your own names for its constructs already. For example, I could do something like this:
+
+```ruby
+RSpec.configure do |rspec|
+  rspec.alias_example_group_to :scenario
+  rspec.alias_example_to :then
+end
+```
+
+So why wouldn't you just do that instead of using something like Specify? The answer lies in realizing that the `Scenario` implementation provided by Specify is not just acting as an alias for `context`. Rather, Specify hooks into RSpec to change the execution. This is done by extending RSpec to support step groups.
 
 ### Specify Augments RSpec
 
@@ -154,7 +163,7 @@ To that end, within the idea of an example group, Specify provides some construc
 
 You can also use the following: `Steps`, `Rules`, `Tests`, `Facts` (along with non-capitalized variants). These are just meant to accommodate various ways of expressing tests but they also show you how Specify can be used to provide a grammar that is as expressive as you would like it to be.
 
-Specify allows the normal RSpec `it`, `example`, and `specify` example keywords to be used within these step groups. However, Specify also adds a few other example keywords based on the above constructs: `step`, `rule`, `test`, and `fact`.
+Specify allows the normal RSpec `it`, `example`, and `specify` example keywords to be used within these step groups. However, Specify also adds a few other example keywords based on the above constructs: `step`, `rule`, `test`, and `fact`. Specify also provides the Gherkin style keywords as examples: `Given`, `When`, `Then`, `And`, and `But`.
 
 RSpec provides multiple ways to create and use shared example groups. These come in pairs, with one method for defining a shared group and another for using it. So, in RSpec, `shared_context` and `include_context` are for reusing common setup and helper logic whereas `shared_examples` and `include_examples` are for reusing examples. Specify hooks into this general mechanism and provides `shared_steps` and `include_steps`. These shared steps go into RSpec's "world," which is an internal container that is used for holding global non-configuration data.
 
