@@ -1,5 +1,6 @@
-AllCops:
-  TargetRubyVersion: 2.5
+inherit_mode:
+  merge:
+    - Exclude
 
 inherit_from:
   - .hound.yml
