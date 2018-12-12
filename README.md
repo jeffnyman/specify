@@ -3,6 +3,11 @@
 > **The height of sophistication is simplicity.**<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;*Clare Boothe Brokaw*
 
+[![Gem Version](https://badge.fury.io/rb/specify.svg)](http://badge.fury.io/rb/specify)
+[![Build Status](https://travis-ci.org/jeffnyman/specify.svg)](https://travis-ci.org/jeffnyman/specify)
+[![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/jeffnyman/specify/blob/master/LICENSE.md)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a42684de1702ed5a9333/maintainability)](https://codeclimate.com/github/jeffnyman/specify/maintainability)
+
 ---
 
 Specify is a tool for leveraging RSpec to create an expressive DSL for test and data conditions. Specify will also provide test result reporting that recognizes the DSL.
