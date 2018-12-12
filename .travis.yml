@@ -4,15 +4,10 @@ language: ruby
 cache: bundler
 
 rvm:
-  - 2.3.7
-  - 2.4.0
   - 2.5.1
 
 before_install:
   - gem install bundler
-  - rvm install 2.3.7
-  - rvm install 2.4.0
-  - rvm install 2.5.1
 
 branches:
   only:
