@@ -80,6 +80,84 @@ Specify lets you write as much logic beside your specifications as you want by l
 
 The [unit tests](https://github.com/jeffnyman/specify/tree/master/spec) will give you some idea of how Specify allows the structuring of test specifications.
 
+### The Specify API
+
+In RSpec, `describe` creates an example group and `it` creates a single example. You can use `context` as an alias for `describe` and you can use `example` and `specify` as aliases for `it`. Specify does a couple of things in the context of the API that RSpec provides.
+
+Specify adds a few new example groups: `Feature` and `Story`. These are considered top-level example groups. Because they are top-level, they are mutually exlcusive so you can't have one nested within the other.
+
+Specify also provides another set of example groups: `Ability`, `Component`, `Workflow`, and `Service`. These can be nested within one another and can be nested within the top-level example groups.
+
+Specify provides some constructs that map to RSpec hooks as well: `Background` and `Setup` (both of which act like an RSpec `before`) along with `Teardown` and `Cleanup` (both of which act like an RSpec `after`).
+
+As a very simple example, consider this:
+
+```ruby
+Feature 'The Nature of Truth' do
+  Ability 'logic tests can be applied' do
+    Scenario 'true is not false' do
+      Then 'true is almost certainly not false' do
+        expect(true).to_not be false
+      end
+    end
+
+    Scenario 'true is true' do
+      Then 'true is pretty definitely true' do
+        expect(true).to be true
+      end
+    end
+  end
+end
+```
+
+Gherkin structures allow you to use the word "Ability" as an alias for "Feature". However Specify takes the viewpoint that a feature could be speaking to a high-level viewpoint, within which there are multiple abilities. Thus you can use both descriptors simultaneously, one nested within the other, which would not be possible with Gherkin. You can also see here that multiple Scenario blocks can be included within a Feature or Ability just as they would in Gherkin.
+
+That Scenario implementation provided by Specify, however, is not just acting as an alias for `context`. Rather, Specify hooks into RSpec to change the execution. This is done by extending RSpec to support step groups.
+
+### Specify Augments RSpec
+
+RSpec is predicated upon unit testing or, at most, integration testing. Thus RSpec focuses on providing a runner that works for edge-to-edge tests. As such, RSpec's mode of action is that all examples should be completely independent. Consider this:
+
+```ruby
+context 'Simple Scenario' do
+  it 'sets up some context' do
+  end
+
+  it 'takes some action'
+  end
+
+  it 'observes some result' do
+  end
+end
+```
+
+Here each it block is a step but also is one independent test. The conditions for passing or failing must be within each step. Contrast this with a Cucumber feature scenario:
+
+```
+Scenario: 'Simple Scenario'
+  Given some context
+  When  some action
+  Then  some result
+```
+
+Here the `Scenario` block has three steps but they are not independent. They have to work together to be considered a passing or failing test.
+
+So, for end-to-end purposes, this means if you want to use RSpec you have to write a sequence of examples, each of which repeats the behavior of all previous examples. Another alternative is that you could write one single large example that performs the entire set of actions. The problem in that case is that there is no independent reporting of each step. Or you could try to rely on a clever use of `before` and `after` calls. The problem there is that the `before` and `after` logic may differ significantly between tests. This is why tools like Cucumber end up being used.
+
+So that's one of the goals of Specify: provide just the good parts of Cucumber and skip all the questionable parts.
+
+At minimum this means the ability to chain examples into a series of steps that run in sequence and which stop when a step fails. This allows you to assemble a series of tests that should all pass, but where complete isolation of those tests is not sensible. Given how Specify augments RSpec, this allows RSpec to be less unit and more integration and certainly more end-to-end.
+
+Key to this is the ability to share state between example steps.
+
+To that end, within the idea of an example group, Specify provides some constructs that are marked with metadata of "has_steps": `Scenario`, `Behavior`, and `Condition`. You can use non-capitalized variations of these as well. These are considered step groups. These cannot be nested within one another.
+
+You can also use the following: `Steps`, `Rules`, `Tests`, `Facts` (along with non-capitalized variants). These are just meant to accommodate various ways of expressing tests but they also show you how Specify can be used to provide a grammar that is as expressive as you would like it to be.
+
+Specify allows the normal RSpec `it`, `example`, and `specify` example keywords to be used within these step groups. However, Specify also adds a few other example keywords based on the above constructs: `step`, `rule`, `test`, and `fact`.
+
+RSpec provides multiple ways to create and use shared example groups. These come in pairs, with one method for defining a shared group and another for using it. So, in RSpec, `shared_context` and `include_context` are for reusing common setup and helper logic whereas `shared_examples` and `include_examples` are for reusing examples. Specify hooks into this general mechanism and provides `shared_steps` and `include_steps`. These shared steps go into RSpec's "world," which is an internal container that is used for holding global non-configuration data.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rake spec:all` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
